@@ -1,0 +1,12 @@
+/* recommended for images and embed content */
+img, embed, object, video {
+  max-width: 100%;
+}
+
+/* recommended for tap target
+* Let´s take a look to #breadcrum items
+*/
+button {
+  min-width: 48px;
+  min-height: 48px;
+}
