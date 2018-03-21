@@ -1,8 +1,19 @@
+// let DBHelper = require('./dbhelper');
+import { DBHelper } from './dbhelper';
 let restaurants,
   neighborhoods,
-  cuisines
-var map
-var markers = []
+  cuisines;
+let fetchNeighborhoods,
+    fillNeighborhoodsHTML,
+    fetchCuisines,
+    fillCuisinesHTML,
+    updateRestaurants,
+    resetRestaurants,
+    fillRestaurantsHTML,
+    createRestaurantHTML,
+    addMarkersToMap;
+let map;
+let markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -115,8 +126,11 @@ resetRestaurants = (restaurants) => {
   const ul = document.getElementById('restaurants-list');
   ul.innerHTML = '';
 
-  // Remove all map markers
-  self.markers.forEach(m => m.setMap(null));
+  if (self.markers && self.markers.length) {
+    // Remove all map markers
+    self.markers.forEach(m => m.setMap(null));
+  }
+  
   self.markers = [];
   self.restaurants = restaurants;
 }

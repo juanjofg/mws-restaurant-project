@@ -1,4 +1,13 @@
-let restaurant;
+import { DBHelper } from './dbhelper';
+
+let restaurant,
+    fetchRestaurantFromURL,
+    fillRestaurantHTML,
+    fillRestaurantHoursHTML,
+    fillReviewsHTML,
+    createReviewHTML,
+    fillBreadcrumb,
+    getParameterByName;
 var map;
 
 /**
@@ -80,10 +89,12 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 
     const day = document.createElement('td');
     day.innerHTML = key;
+    day.setAttribute('tabindex', 0);
     row.appendChild(day);
 
     const time = document.createElement('td');
     time.innerHTML = operatingHours[key];
+    time.setAttribute('tabindex', 0);
     row.appendChild(time);
 
     hours.appendChild(row);
