@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -7,7 +7,7 @@
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/custom.css">
-  <title>Restaurant Reviews</title>
+  <title><%= htmlWebpackPlugin.options.title || 'MWSND stage 1'%></title>
 </head>
 
 <body>
@@ -35,15 +35,14 @@
     </section>
   </main>
 
-  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD59tisJoZ8dQy3Nh_7xSDzRZGuMfC6CCQ&libraries=places&callback=initMap"></script>
-
-
   <footer id="footer">
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
-
+  <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+  <% } %>
+  
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD59tisJoZ8dQy3Nh_7xSDzRZGuMfC6CCQ&libraries=places&callback=initMap"></script>  
 </body>
 
 </html>
