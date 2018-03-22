@@ -32,7 +32,7 @@ module.exports = {
       inject: false
     }),
     new CopyWebpackPlugin([
-      { from: './data/', to: './dist/data/' }
+      { from: './data/', to: './data/' }
     ])
   ],
   devtool: 'source-map'
