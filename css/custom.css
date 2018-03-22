@@ -10,3 +10,13 @@ button {
   min-width: 48px;
   min-height: 48px;
 }
+
+/* Accesible hidden content */
+.hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
