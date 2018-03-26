@@ -51,18 +51,20 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
-  height: 80px;
+  height: 60px;
   background-color: #252831;
   text-align:center;
 }
 nav h1 {
   margin: auto;
+  font-weight: normal;
+  line-height: 2.5em;
 }
 nav h1 a {
   color: #fff;
-  font-size: 14pt;
+  font-size: 14px;
   font-weight: 200;
-  letter-spacing: 10px;
+  letter-spacing: 6px;
   text-transform: uppercase;
 }
 #breadcrumb {
@@ -71,7 +73,7 @@ nav h1 a {
     background-color: #eee;
     font-size: 17px;
     margin: 0;
-    width: calc(50% - 80px);
+    /* width: calc(50% - 80px); */
 }
 
 /* Display list items side by side */
@@ -157,12 +159,24 @@ nav h1 a {
 }
 
 @media screen and (min-width: 480px) {
+  nav {
+    height: 80px;
+  }
+
+  nav h1 a {
+    letter-spacing: 8px;
+  }
+
   #restaurants-list li {
     width: 50%;
   }
 }
 
 @media screen and (min-width: 768px) {
+  nav h1 a {
+    letter-spacing: 10px;
+  }
+
   #restaurants-list li {
     width: 33%;
   }
@@ -170,7 +184,9 @@ nav h1 a {
 
 @media screen and (min-width: 1200px) {
   .filter-options,
-  .restaurants-container {
+  .restaurants-container,
+  .inside #restaurant-container,
+  #breadcrumb {
     width: 1200px;
     margin: 0 auto;
   }
@@ -217,28 +233,28 @@ nav h1 a {
 
 /* ====================== Restaurant Details ====================== */
 .inside header {
-  position: fixed;
+  /* position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 1000; */
 }
 .inside #map-container {
-  background: blue none repeat scroll 0 0;
+  /* background: blue none repeat scroll 0 0;
   height: 87%;
   position: fixed;
   right: 0;
   top: 80px;
-  width: 50%;
+  width: 50%; */
 }
 .inside #map {
-  background-color: #ccc;
+  /* background-color: #ccc;
   height: 100%;
-  width: 100%;
+  width: 100%; */
 }
 .inside #footer {
-  bottom: 0;
+  /* bottom: 0;
   position: absolute;
-  width: 50%;
+  width: 50%; */
 }
 #restaurant-name {
   color: #f18200;
