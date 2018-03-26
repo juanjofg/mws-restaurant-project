@@ -1,4 +1,6 @@
 import { DBHelper } from './dbhelper';
+import './../css/styles.css';
+import './../css/custom.css';
 
 let restaurant,
     fetchRestaurantFromURL,
