@@ -1,5 +1,7 @@
-// let DBHelper = require('./dbhelper');
 import { DBHelper } from './dbhelper';
+import './../css/styles.css';
+import './../css/custom.css';
+
 let restaurants,
   neighborhoods,
   cuisines;
