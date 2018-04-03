@@ -166,10 +166,12 @@ createRestaurantHTML = (restaurant) => {
   article.append(name);
 
   const neighborhood = document.createElement('p');
+  neighborhood.className = 'neighborhood';
   neighborhood.innerHTML = restaurant.neighborhood;
   article.append(neighborhood);
 
   const address = document.createElement('p');
+  address.className = 'address';
   address.innerHTML = restaurant.address;
   article.append(address);
 

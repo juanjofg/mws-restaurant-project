@@ -151,14 +151,17 @@ nav h1 a {
   /* border: 2px solid #ccc; */
   font-family: Arial,sans-serif;
   margin: 15px 0;
-  min-height: 380px;
-  padding: 0 0 25px;
+  min-height: 400px;
+  padding: 0;
   text-align: left;
   width: 100%;
 }
 
 #restaurants-list article {
   padding: 1em .5em;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 20px);
 }
 
 @media screen and (min-width: 480px) {
@@ -203,7 +206,6 @@ nav h1 a {
   background-color: #ccc;
   display: block;
   margin: 0;
-  min-height: 248px;
   min-width: 100%;
 }
 #restaurants-list li h1 {
@@ -219,6 +221,17 @@ nav h1 a {
 #restaurants-list p {
   margin: 0;
   font-size: 11pt;
+  flex-grow: 1;
+}
+#restaurants-list .neighborhood {
+  font-weight: 700;
+  color:#212121;
+}
+#restaurants-list .address {
+  line-height: 1.1;
+  font-weight: 400;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #727272;
 }
 #restaurants-list li a {
   background-color: #ae6309;
