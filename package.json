@@ -2,7 +2,7 @@
   "name": "juanjo-mwsnd-restaurant-project",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack",
+    "build": "grunt && webpack",
     "watch": "yarn build --watch",
     "serve": "webpack-dev-server --port=8000"
   },
@@ -14,5 +14,9 @@
     "style-loader": "^0.20.3",
     "webpack": "3.3.0",
     "webpack-dev-server": "2.5.1"
+  },
+  "dependencies": {
+    "grunt": "^1.0.2",
+    "grunt-responsive-images": "^1.10.1"
   }
 }
