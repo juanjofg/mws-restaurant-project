@@ -33,7 +33,8 @@ module.exports = {
       inject: false
     }),
     new CopyWebpackPlugin([
-      { from: './data/', to: './data/' }
+      { from: './data/', to: './data/' },
+      { from: './images/', to: './img/'}
     ]),
     new ExtractTextWebpackPlugin("style.css")
   ],

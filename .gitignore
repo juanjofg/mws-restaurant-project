@@ -2,3 +2,4 @@ node_modules/
 CODEOWNERS
 yarn-error.log
 /dist
+/images
