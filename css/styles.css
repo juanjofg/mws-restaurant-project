@@ -171,6 +171,8 @@ nav h1 a {
 
   nav h1 a {
     letter-spacing: 8px;
+    font-size: 16pt;
+    line-height: 4em;
   }
 
   #restaurants-list li {
