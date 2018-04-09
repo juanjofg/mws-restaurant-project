@@ -28,7 +28,7 @@
     <!-- End nav -->
   </header>
   <!-- End header -->
-
+  <a class="hidden" href="#restaurant-container">Skip map</a>
   <!-- Beginning main -->
   <main id="maincontent" role="main">
     <!-- Beginning map -->
@@ -43,7 +43,15 @@
         <img id="restaurant-img">
         <p id="restaurant-cuisine"></p>
         <p id="restaurant-address"></p>
-        <table id="restaurant-hours"></table>
+        <table summary="Restaurant weekly schedule" id="restaurant-schedule">
+          <thead>
+            <tr>
+              <th scope="col">Week days</th>
+              <th scope="col">Opening hours</th>
+            </tr>
+          </thead>
+          <tbody id="restaurant-hours"></tbody>
+        </table>
       </article>
     </section>
     <!-- end restaurant -->
