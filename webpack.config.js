@@ -6,9 +6,11 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
+    index: './js/index.js',
     main: './js/main.js',
     dbhelper: './js/dbhelper.js',
-    restaurant: './js/restaurant_info.js'
+    restaurant: './js/restaurant_info.js',
+    sw: './js/sw.js'
   },
   output: {
     filename: "[name].bundle.js",
@@ -20,7 +22,7 @@ module.exports = {
       hash: true,
       template: './index.html',
       title: 'Restaurant Reviews',
-      chunks: ['main', 'dbhelper'],
+      chunks: ['index', 'main', 'dbhelper', 'sw'],
       filename: 'index.html',
       inject: false
     }),
@@ -28,7 +30,7 @@ module.exports = {
       hash: true,
       template: './restaurant.html',
       title: 'Restaurant Info',
-      chunks: ['restaurant', 'dbhelper'],
+      chunks: ['index', 'restaurant', 'dbhelper', 'sw'],
       filename: 'restaurant.html',
       inject: false
     }),
@@ -36,7 +38,8 @@ module.exports = {
       { from: './data/', to: './data/' },
       { from: './images/', to: './img/'}
     ]),
-    new ExtractTextWebpackPlugin("style.css")
+    new ExtractTextWebpackPlugin("style.css"),
+    new ExtractTextWebpackPlugin("custom.css")
   ],
   module: {
     rules: [
