@@ -93,13 +93,13 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
-  updateRestaurants();
+  self.updateRestaurants();
 }
 
 /**
  * Update page and map for current restaurants.
  */
-updateRestaurants = () => {
+self.updateRestaurants = () => {
   const cSelect = document.getElementById('cuisines-select');
   const nSelect = document.getElementById('neighborhoods-select');
 
