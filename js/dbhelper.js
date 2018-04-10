@@ -154,6 +154,13 @@ export class DBHelper {
   }
 
   /**
+   * Restaurant image description.
+   */
+  static imageDescriptionForRestaurant(restaurant) {
+    return (restaurant.photo_description);
+  }  
+
+  /**
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {

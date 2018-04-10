@@ -163,7 +163,7 @@ createRestaurantHTML = (restaurant) => {
   const x2 = src.replace(regexp, '$1-480_2x$2');
   image.src = x1;
   image.srcset = `${x1} 1x, ${x2} 2x`;
-  image.alt = ' ';
+  image.alt = DBHelper.imageDescriptionForRestaurant(restaurant);
   article.append(image);
 
   const name = document.createElement('h1');

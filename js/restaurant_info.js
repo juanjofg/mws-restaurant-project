@@ -85,7 +85,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   });
 
   image.src = src.replace(regexp, '$1-480_1x$2');
-  image.alt = '';
+  image.alt = DBHelper.imageDescriptionForRestaurant(restaurant);;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
