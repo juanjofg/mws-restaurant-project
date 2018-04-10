@@ -387,7 +387,6 @@ nav h1 a {
 #restaurant-img {
   width: 100%;
 }
-@media screen and (min-width: 480px) { }
 @media screen and (min-width: 768px) {
   .inside #map-container {
     width: 50%;
