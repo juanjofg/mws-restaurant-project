@@ -13,6 +13,22 @@ module.exports = function(grunt) {
             width: 480,
             suffix: '_2x',
             quality: 100
+          }, {
+            width: 540,
+            suffix: '_1x',
+            quality: 50
+          }, {
+            width: 540,
+            suffix: '_2x',
+            quality: 100
+          },{
+            width: 800,
+            suffix: '_1x',
+            quality: 50
+          }, {
+            width: 800,
+            suffix: '_2x',
+            quality: 100
           }]
         },
         files: [{
