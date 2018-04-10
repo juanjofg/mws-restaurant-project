@@ -307,6 +307,10 @@ nav h1 a {
 #restaurant-container article{
   padding: 0 20px 20px;
 }
+#restaurant-container picture {
+  display: block;
+  text-align: center;
+}
 #reviews-container {
   padding: 20px;
 }
@@ -379,6 +383,9 @@ nav h1 a {
 }
 #restaurant-hours tr > th {
   width: 35%;
+}
+#restaurant-img {
+  width: 100%;
 }
 @media screen and (min-width: 480px) { }
 @media screen and (min-width: 768px) {
