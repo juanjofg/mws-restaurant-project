@@ -2,14 +2,26 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('restaurants-v1').then(function(cache) {
       return cache.addAll([
-        './dist/index.html',
-        './dist/restaurant.html',
-        './dist/main.bundle.js',
-        './dist/restaurant.bundle.js',
-        './dist/dbhelper.bundle.js',
-        './dist/style.css',
-        './dist/custom.css',
-        './data/restaurants.json',
+        '/',
+        '/restaurant.html',
+        '/index.bundle.js',
+        '/sw.bundle.js',
+        '/main.bundle.js',
+        '/restaurant.bundle.js',
+        '/dbhelper.bundle.js',
+        '/style.css',
+        '/custom.css',
+        '/img/1-480_1x.jpg',
+        '/img/2-480_1x.jpg',
+        '/img/3-480_1x.jpg',
+        '/img/4-480_1x.jpg',
+        '/img/5-480_1x.jpg',
+        '/img/6-480_1x.jpg',
+        '/img/7-480_1x.jpg',
+        '/img/8-480_1x.jpg',
+        '/img/9-480_1x.jpg',
+        '/img/10-480_1x.jpg',
+        '/data/restaurants.json',
         'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700'
       ]);
     })
@@ -17,10 +29,39 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+  // Check url for restaurant + query string and return
+  // restaurant.html from cache
+  if (event.request.url.indexOf('restaurant.html?id') > 0) {
+    event.respondWith(caches.match('/restaurant.html'));
+    return;
+  }
+
+  // Check connection and send message
+  // to initialize the app
+  if (event.request.url.indexOf('initMap') > 0) {
+    if (navigator.onLine) {
+      return fetch(event.request);
+    } else {
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => client.postMessage({msg: 'Run initMap offline'}));
+      })
+    }
+  }
+
+  // Intercept image files and return low resolution
+  // images from cache
+  let imageRegex = /\/img\/([d\-\d\_d])*\x.(?:jpg)/;
+  if (imageRegex.test(event.request.url)) {
+    let lowRes = '480_1x';
+    let img = event.request.url.replace(/-([\d\_d])*\x/, '-480_1x');
+    event.respondWith(caches.match(img));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(function(response){
-      if (response) return response;
-      return fetch(event.request);
+      return response || fetch(event.request);
     })
   );
+  
 });
