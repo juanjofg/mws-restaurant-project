@@ -4,7 +4,7 @@
   "scripts": {
     "build": "grunt && webpack",
     "watch": "yarn build --watch",
-    "serve": "webpack-dev-server --port=8000"
+    "serve": "http-server dist -p 8000 -c.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.5.1",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "grunt": "^1.0.2",
-    "grunt-responsive-images": "^1.10.1"
+    "grunt-responsive-images": "^1.10.1",
+    "http-server": "^0.11.1"
   }
 }
