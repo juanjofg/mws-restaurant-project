@@ -6,7 +6,6 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './js/index.js',
     main: './js/main.js',
     dbhelper: './js/dbhelper.js',
     restaurant: './js/restaurant_info.js',
@@ -19,18 +18,18 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin({}),
     new HtmlWebpackPlugin({
-      hash: true,
+      hash: false,
       template: './index.html',
       title: 'Restaurant Reviews',
-      chunks: ['index', 'main', 'dbhelper', 'sw'],
+      chunks: ['main', 'dbhelper', 'sw'],
       filename: 'index.html',
       inject: false
     }),
     new HtmlWebpackPlugin({
-      hash: true,
+      hash: false,
       template: './restaurant.html',
       title: 'Restaurant Info',
-      chunks: ['index', 'restaurant', 'dbhelper', 'sw'],
+      chunks: ['restaurant', 'dbhelper', 'sw'],
       filename: 'restaurant.html',
       inject: false
     }),
