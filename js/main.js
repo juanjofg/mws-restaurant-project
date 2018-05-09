@@ -162,9 +162,9 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   const src = DBHelper.imageUrlForRestaurant(restaurant);
-  const regexp = /(\d+)(\.jpg)/;
-  const x1 = src.replace(regexp, '$1-480_1x$2');
-  const x2 = src.replace(regexp, '$1-480_2x$2');
+  const regexp = /(\d+)/;
+  const x1 = src.replace(regexp, '$1-480_1x.jpg');
+  const x2 = src.replace(regexp, '$1-480_2x.jpg');
   image.src = x1;
   image.srcset = `${x1} 1x, ${x2} 2x`;
   image.alt = DBHelper.imageDescriptionForRestaurant(restaurant);

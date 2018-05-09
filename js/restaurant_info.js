@@ -76,19 +76,19 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   image.className = 'restaurant-img'
 
   const src = DBHelper.imageUrlForRestaurant(restaurant);
-  const regexp = /(\d+)(\.jpg)/;
+  const regexp = /(\d+)/;
   const imgSizes = [800, 540, 800, 480];
   const media = [900, 768, 640, 480];
   imgSizes.forEach((size, idx) => {
     const source = document.createElement('source');
     source.media = `(min-width:${media[idx]}px)`;
-    const x1 = src.replace(regexp, '$1-'+ size + '_1x$2 1x');
-    const x2 = src.replace(regexp, '$1-'+ size + '_2x$2 2x');
+    const x1 = src.replace(regexp, '$1-'+ size + '_1x.jpg 1x');
+    const x2 = src.replace(regexp, '$1-'+ size + '_2x.jpg 2x');
     source.srcset = [x1, x2].join(',');
     picture.insertBefore(source, image);
   });
 
-  image.src = src.replace(regexp, '$1-480_1x$2');
+  image.src = src.replace(regexp, '$1-480_1x.jpg');
   image.alt = DBHelper.imageDescriptionForRestaurant(restaurant);;
 
   const cuisine = document.getElementById('restaurant-cuisine');
