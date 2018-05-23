@@ -401,7 +401,7 @@
         "name": "Casa Enrique",
         "neighborhood": "Queens",
         "photo_description": "Casa Enrique dinning room",
-        "photograph": "10.jpg",
+        "photograph": "10",
         "address": "5-48 49th Ave, Queens, NY 11101",
         "latlng": {
           "lat": 40.743394,
