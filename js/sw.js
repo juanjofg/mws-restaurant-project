@@ -5,6 +5,7 @@ self.addEventListener('install', function(event) {
         '/',
         '/restaurant.html',
         '/index.bundle.js',
+        '/idb.bundle.js',
         '/sw.bundle.js',
         '/main.bundle.js',
         '/restaurant.bundle.js',
@@ -21,7 +22,6 @@ self.addEventListener('install', function(event) {
         '/img/8-480_1x.jpg',
         '/img/9-480_1x.jpg',
         '/img/10-480_1x.jpg',
-        '/data/restaurants.json',
         'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700'
       ]);
     })
