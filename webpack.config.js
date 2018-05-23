@@ -9,7 +9,8 @@ module.exports = {
     main: './js/main.js',
     dbhelper: './js/dbhelper.js',
     restaurant: './js/restaurant_info.js',
-    sw: './js/sw.js'
+    sw: './js/sw.js',
+    idb: './node_modules/idb/lib/idb.js'
   },
   output: {
     filename: "[name].bundle.js",
@@ -21,7 +22,8 @@ module.exports = {
       hash: false,
       template: './index.html',
       title: 'Restaurant Reviews',
-      chunks: ['main', 'dbhelper', 'sw'],
+      chunksSortMode: 'manual',
+      chunks: [ 'idb', 'dbhelper', 'main', 'sw'],
       filename: 'index.html',
       inject: false
     }),
@@ -29,7 +31,8 @@ module.exports = {
       hash: false,
       template: './restaurant.html',
       title: 'Restaurant Info',
-      chunks: ['restaurant', 'dbhelper', 'sw'],
+      chunksSortMode: 'none',
+      chunks: ['idb', 'dbhelper', 'restaurant', 'sw'],
       filename: 'restaurant.html',
       inject: false
     }),
