@@ -1,12 +1,11 @@
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('restaurants-v1').then(function(cache) {
+    caches.open('restaurants-v2').then(function(cache) {
       return cache.addAll([
         '/',
         '/restaurant.html',
         '/index.bundle.js',
         '/idb.bundle.js',
-        '/sw.bundle.js',
         '/main.bundle.js',
         '/restaurant.bundle.js',
         '/dbhelper.bundle.js',
