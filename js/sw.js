@@ -11,7 +11,6 @@ self.addEventListener('install', function(event) {
         '/restaurant.bundle.js',
         '/dbhelper.bundle.js',
         '/style.css',
-        '/custom.css',
         '/img/1-480_1x.jpg',
         '/img/2-480_1x.jpg',
         '/img/3-480_1x.jpg',
