@@ -26,7 +26,31 @@ window.initMap = (offline) => {
       scrollwheel: false
     });
   }
-  RestaurantDirectory.updateRestaurants();
+  self.updateRestaurants();
+}
+
+
+/**
+ * Update page and map for current restaurants.
+ */
+self.updateRestaurants = () => {
+  const cSelect = document.getElementById('cuisines-select');
+  const nSelect = document.getElementById('neighborhoods-select');
+
+  const cIndex = cSelect.selectedIndex;
+  const nIndex = nSelect.selectedIndex;
+
+  const cuisine = cSelect[cIndex].value;
+  const neighborhood = nSelect[nIndex].value;
+
+  DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
+    if (error) { // Got an error!
+      console.error(error);
+    } else {
+      RestaurantDirectory.resetRestaurants(restaurants);
+      RestaurantDirectory.fillRestaurantsHTML();
+    }
+  })
 }
 
 export class RestaurantDirectory {
@@ -97,29 +121,6 @@ export class RestaurantDirectory {
       option.value = cuisine;
       select.append(option);
     });
-  }
-
-  /**
-   * Update page and map for current restaurants.
-   */
-  static updateRestaurants() {
-    const cSelect = document.getElementById('cuisines-select');
-    const nSelect = document.getElementById('neighborhoods-select');
-
-    const cIndex = cSelect.selectedIndex;
-    const nIndex = nSelect.selectedIndex;
-
-    const cuisine = cSelect[cIndex].value;
-    const neighborhood = nSelect[nIndex].value;
-
-    DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-      if (error) { // Got an error!
-        console.error(error);
-      } else {
-        this.resetRestaurants(restaurants);
-        this.fillRestaurantsHTML();
-      }
-    })
   }
 
   /**
