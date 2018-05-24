@@ -31,7 +31,7 @@ module.exports = {
       hash: false,
       template: './restaurant.html',
       title: 'Restaurant Info',
-      chunksSortMode: 'none',
+      chunksSortMode: 'manual',
       chunks: ['idb', 'dbhelper', 'restaurant', 'sw'],
       filename: 'restaurant.html',
       inject: false
