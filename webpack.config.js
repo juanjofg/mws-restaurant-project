@@ -3,9 +3,11 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
+    index: './js/index.js',
     main: './js/main.js',
     dbhelper: './js/dbhelper.js',
     restaurant: './js/restaurant_info.js',
@@ -37,11 +39,13 @@ module.exports = {
       inject: false
     }),
     new CopyWebpackPlugin([
-      { from: './data/', to: './data/' },
-      { from: './images/', to: './img/'}
+      { from: './images/', to: './img/'},
+      { from: './manifest.json', to: './manifest.json'}
     ]),
     new ExtractTextWebpackPlugin("style.css"),
-    new ExtractTextWebpackPlugin("custom.css")
+    new UglifyWebpackPlugin({
+      sourceMap: true
+    })
   ],
   module: {
     rules: [
