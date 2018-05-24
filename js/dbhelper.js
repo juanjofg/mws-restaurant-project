@@ -1,7 +1,15 @@
+import idb from "idb";
 /**
  * Common database helper functions.
  */
-export class DBHelper {
+export class DBHelper {  
+
+  /**
+   * Initialise IndexedDB database and return a promise
+   */
+  static initIDB() {
+    this._promiseDb = this._openDatabase();
+  }
 
   /**
    * Database URL.
@@ -12,14 +20,77 @@ export class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
+  static fetchIdbRestaurants(callback) {
+    
+  }
+
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
+    // TODO: call indexedDB only after filling DB
+    return this._promiseDb.then((db) => {
+
+      if (!db) return;
+
+      this._promiseDb.then((db) => {
+        let tx = db.transaction('restaurants');
+        let restaurantStore = tx.objectStore('restaurants');
+
+        return restaurantStore.getAll();
+      }).then(restaurants => {
+        if (!restaurants.length) {
+          this.fetchRemoteRestaurants(callback);
+        } else {
+          callback(null, restaurants);
+        }
+      }); 
+    });
+  }
+ 
+  /**
+   * Fetch all remote restaurants.
+   */
+  static fetchRemoteRestaurants(callback) {
     fetch(DBHelper.DATABASE_URL)
       .then(response => response.json())
-      .then((restaurants) => callback(null, restaurants))
+      .then((restaurants) => {
+        callback(null, restaurants);
+        this._fillLocalRestaurants(restaurants);
+      })
       .catch(error => callback(error, null));
+  }
+
+  /**
+   * IndexDB handler
+   */
+  static _openDatabase() {
+    if (!navigator.serviceWorker) {
+      return Promise.resolve();
+    }
+    return idb.open('restaurant', 1, (upgradeDb) => {
+      switch(upgradeDb.oldVersion) {
+        case 0:
+          upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+      }
+    });
+  }
+
+  /**
+   * Populate indexDB database with restaurants
+   */
+  static _fillLocalRestaurants(restaurants) {
+    this._promiseDb.then((db) => {
+      if (!db) return;
+
+      const tx = db.transaction('restaurants', 'readwrite');
+      const restaurantsStore = tx.objectStore('restaurants');
+
+      restaurants.map(restaurant => {
+        restaurantsStore.put(restaurant);
+      });
+      return tx.complete;
+    }, error => console.log(error));
   }
 
   /**
