@@ -1,6 +1,5 @@
 import { DBHelper } from './dbhelper';
 import './../css/styles.css';
-import './../css/custom.css';
 
 /**
  * Initialize Google map, called from HTML.

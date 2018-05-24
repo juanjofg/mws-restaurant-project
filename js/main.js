@@ -1,6 +1,5 @@
 import { DBHelper } from './dbhelper';
 import './../css/styles.css';
-import './../css/custom.css';
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
