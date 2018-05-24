@@ -429,3 +429,26 @@ nav h1 a {
     margin: 0 auto;
   }
 }
+
+/* recommended for images and embed content */
+img, embed, object, video {
+  max-width: 100%;
+}
+
+/* recommended for tap target
+* Let´s take a look to #breadcrum items
+*/
+button {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+/* Accesible hidden content */
+.hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
