@@ -3,16 +3,10 @@ import './../css/styles.css';
 import './../css/custom.css';
 
 /**
- * Open/create indexedDB as soon as the page is loaded.
- */
-document.addEventListener('DOMContentLoaded', (event) => {
-  DBHelper.initIDB();
-});
-
-/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = (offline) => {
+  DBHelper.initIDB();
   RestaurantInfo.fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
