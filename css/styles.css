@@ -186,6 +186,15 @@ nav h1 a {
   right: 15px;
 }
 
+#restaurants-list article .toggleFavorite {
+  background: url(/img/fav_1.svg) no-repeat 0 0;
+  float: right;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  text-indent: -9999px;
+}
+
 @media screen and (min-width: 480px) {
   nav {
     height: 80px;

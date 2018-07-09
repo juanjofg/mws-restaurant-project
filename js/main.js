@@ -178,6 +178,17 @@ export class RestaurantDirectory {
     const neighborhood = document.createElement('p');
     neighborhood.className = 'neighborhood';
     neighborhood.innerHTML = restaurant.neighborhood;
+
+    const favorite = document.createElement('span');
+    favorite.className = 'toggleFavorite';
+    favorite.setAttribute('tabindex', 0);
+    favorite.innerText = 'Toggle favorite restaurant';
+    favorite.addEventListener('click', (event) => {
+      RestaurantDirectory.toggleFavoriteRestaurant(restaurant);
+    });
+
+    neighborhood.append(favorite);
+    
     article.append(neighborhood);
 
     const address = document.createElement('p');
@@ -193,6 +204,10 @@ export class RestaurantDirectory {
     li.append(article);
     
     return li
+  }
+
+  static toggleFavoriteRestaurant(restaurant) {
+    console.log(restaurant.id);
   }
 
   /**
