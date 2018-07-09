@@ -172,6 +172,20 @@ nav h1 a {
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
+#restaurants-list article.favorite {
+  position: relative;
+}
+
+#restaurants-list article.favorite::before {
+  content: '';
+  background: url(/img/fav_2.svg) no-repeat 0 0;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 2px;
+  right: 15px;
+}
+
 @media screen and (min-width: 480px) {
   nav {
     height: 80px;
