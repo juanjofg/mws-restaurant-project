@@ -184,6 +184,7 @@ export class RestaurantDirectory {
     favorite.setAttribute('tabindex', 0);
     favorite.innerText = 'Toggle favorite restaurant';
     favorite.addEventListener('click', (event) => {
+      article.classList.toggle('favorite');
       RestaurantDirectory.toggleFavoriteRestaurant(restaurant);
     });
 
@@ -207,6 +208,7 @@ export class RestaurantDirectory {
   }
 
   static toggleFavoriteRestaurant(restaurant) {
+    // TODO: Save favorite flag in DB
     console.log(restaurant.id);
   }
 
