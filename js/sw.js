@@ -6,7 +6,6 @@ self.addEventListener('install', function(event) {
         '/restaurant.html',
         '/index.bundle.js',
         '/idb.bundle.js',
-        '/sw.bundle.js',
         '/main.bundle.js',
         '/restaurant.bundle.js',
         '/dbhelper.bundle.js',
