@@ -60,6 +60,12 @@ export class RestaurantInfo {
    * Create restaurant HTML and add it to the webpage
    */
   static fillRestaurantHTML(restaurant = this.restaurant) {
+    const article = document.getElementsByTagName('article');
+
+    if (restaurant.is_favorite) {
+      article[0].classList.add('favorite');
+    }
+
     const name = document.getElementById('restaurant-name');
     name.innerHTML = restaurant.name;
 

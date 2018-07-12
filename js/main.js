@@ -179,17 +179,27 @@ export class RestaurantDirectory {
     neighborhood.className = 'neighborhood';
     neighborhood.innerHTML = restaurant.neighborhood;
 
+    if (restaurant.is_favorite === true) {
+      article.classList.add('favorite');
+    }
+
     const favorite = document.createElement('span');
     favorite.className = 'toggleFavorite';
     favorite.setAttribute('tabindex', 0);
     favorite.innerText = 'Toggle favorite restaurant';
     favorite.addEventListener('click', (event) => {
       article.classList.toggle('favorite');
-      RestaurantDirectory.toggleFavoriteRestaurant(restaurant);
+      restaurant.is_favorite = !restaurant.is_favorite;
+      DBHelper.toggleFavoriteRestaurant(restaurant, (error) => {
+        if (error) { // Got an error!
+          console.error(error);
+        } else {
+          console.log("Restaurant marked as favorite");
+        }
+      });
     });
 
     neighborhood.append(favorite);
-    
     article.append(neighborhood);
 
     const address = document.createElement('p');
@@ -205,11 +215,6 @@ export class RestaurantDirectory {
     li.append(article);
     
     return li
-  }
-
-  static toggleFavoriteRestaurant(restaurant) {
-    // TODO: Save favorite flag in DB
-    console.log(restaurant.id);
   }
 
   /**

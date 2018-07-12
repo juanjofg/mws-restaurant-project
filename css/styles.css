@@ -172,11 +172,11 @@ nav h1 a {
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
-#restaurants-list article.favorite {
+article.favorite {
   position: relative;
 }
 
-#restaurants-list article.favorite::before {
+article.favorite::before {
   content: '';
   background: url(/img/fav_2.svg) no-repeat 0 0;
   width: 40px;
@@ -327,9 +327,10 @@ nav h1 a {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
 }
-#restaurant-container article{
+#restaurant-container article {
   padding: 0 20px 20px;
 }
+
 #restaurant-container picture {
   display: block;
   text-align: center;
