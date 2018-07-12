@@ -13,15 +13,10 @@ export class DBHelper {
 
   /**
    * Database URL.
-   * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
-  }
-
-  static fetchIdbRestaurants(callback) {
-    
+    return `http://localhost:${port}`;
   }
 
   /**
@@ -52,7 +47,7 @@ export class DBHelper {
    * Fetch all remote restaurants.
    */
   static fetchRemoteRestaurants(callback) {
-    fetch(DBHelper.DATABASE_URL)
+    fetch(`${DBHelper.DATABASE_URL}/restaurants`)
       .then(response => response.json())
       .then((restaurants) => {
         callback(null, restaurants);
@@ -72,6 +67,9 @@ export class DBHelper {
       switch(upgradeDb.oldVersion) {
         case 0:
           upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+          upgradeDb.createObjectStore('outbox', { autoIncrement : true, keyPath: 'id' });
+          let reviewStore = upgradeDb.createObjectStore('reviews', { keyPath: 'id'});
+          reviewStore.createIndex('restaurantId', 'restaurant_id');
       }
     });
   }
@@ -199,6 +197,61 @@ export class DBHelper {
         callback(null, uniqueCuisines);
       }
     });
+  }
+
+  /**
+   * Fetch all reviews for a restaurant.
+   */
+  static fetchRestaurantReviews(id, callback) {
+    // TODO: call indexedDB only after filling DB
+    return this._promiseDb.then((db) => {
+
+      if (!db) return;
+
+      this._promiseDb.then((db) => {
+        let tx = db.transaction('reviews');
+        let reviewStore = tx.objectStore('reviews');
+        let reviewIndex = reviewStore.index('restaurantId');
+        
+        return reviewIndex.getAll(id);
+      }).then(reviews => {
+        if (!reviews.length) {
+          this.fetchRemoteRestaurantReviews(id, callback);
+        } else {
+          callback(null, reviews);
+        }
+      }); 
+    });
+  }
+
+  /**
+   * Fetch all reviews for a given restaurant from Idb
+   */
+  static fetchRemoteRestaurantReviews(id, callback) {
+    fetch(`${DBHelper.DATABASE_URL}/reviews/?restaurant_id=${id}`)
+      .then(response => response.json())
+      .then((reviews) => {
+        callback(null, reviews);
+        this._fillLocalReviews(reviews);
+      })
+      .catch(error => callback(error, null));
+  }
+
+  /**
+   * Populate indexDB database with restaurant reviews
+   */
+  static _fillLocalReviews(reviews) {
+    this._promiseDb.then((db) => {
+      if (!db) return;
+
+      const tx = db.transaction('reviews', 'readwrite');
+      const reviewsStore = tx.objectStore('reviews');
+
+      reviews.map(review => {
+        reviewsStore.put(review);
+      });
+      return tx.complete;
+    }, error => console.log(error));
   }
 
   /**
