@@ -29,6 +29,7 @@ export class RestaurantInfo {
   constructor() {
     this.map = undefined;
     this.restaurant = undefined;
+    this.reviews = [];
   }
 
   /**
@@ -101,7 +102,20 @@ export class RestaurantInfo {
       this.fillRestaurantHoursHTML();
     }
     // fill reviews
-    this.fillReviewsHTML();
+    // this.fillReviewsHTML();
+    this.getRestaurantReviews(restaurant.id);
+  }
+
+  static getRestaurantReviews(id) {
+    DBHelper.fetchRestaurantReviews(id, (error, reviews) => {
+      if (error) {
+        console.log(error);
+      } else {
+        this.restaurant.reviews = reviews;
+      }
+      // fill reviews
+      this.fillReviewsHTML();
+    });
   }
 
   /**
@@ -161,7 +175,7 @@ export class RestaurantInfo {
 
     const date = document.createElement('p');
     date.className = 'datetime';
-    date.innerHTML = review.date;
+    date.innerText = this.formatDate(review.updatedAt);
     li.appendChild(date);
 
     const rating = document.createElement('p');
@@ -175,6 +189,13 @@ export class RestaurantInfo {
     li.appendChild(comments);
 
     return li;
+  }
+
+  /**
+   * Format date as YYYY-MM-DD
+   */
+  static formatDate(datetime) {
+    return new Date(datetime).getFullYear() + '-' + new Date(datetime).getMonth() + '-' + new Date(datetime).getDate();
   }
 
   /**
