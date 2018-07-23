@@ -64,6 +64,32 @@
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container">
+      <fieldset>
+        <legend>Add your own review</legend>
+        <form id="reviews-form">
+          <div class="review-user-name">
+            <label for="review-user-name">User name</label>
+            <input type="text" id="review-user-name">
+          </div>
+          <div class="review-restaurant-rating">
+            <label for="review-restaurant-rating">Rating</label>
+            <select id="review-restaurant-rating">
+              <option value="">Rate restaurant</option>
+              <option value="1">Extremely bad - 1</option>
+              <option value="2">Very bad - 2</option>
+              <option value="3">Not bad - 3</option>
+              <option value="4">Very good - 4</option>
+              <option value="5">Extremely good - 5</option>
+            </select>
+          </div>
+          <div class="review-user-comments">
+            <label for="review-user-comments">Comments</label>
+            <textarea id="review-user-comments" cols="30" rows="10"></textarea>
+          </div>
+          <button type="button" id="review-submit">Submit</button>
+        </form>
+      </fieldset>
+      <hr>
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
