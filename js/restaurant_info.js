@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     window.initMap(true);
   });
 
-  navigator.serviceWorker.register('sw.bundle.js').then(function() {
+  navigator.serviceWorker.register('/sw.bundle.js').then(function() {
     console.log('Registration worked!');
     navigator.serviceWorker.ready.then(function(swRegistration) {
       return swRegistration.sync.register('dbSync');

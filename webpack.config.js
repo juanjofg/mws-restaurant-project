@@ -24,7 +24,7 @@ module.exports = {
       template: './index.html',
       title: 'Restaurant Reviews',
       chunksSortMode: 'manual',
-      chunks: [ 'idb', 'dbhelper', 'main', 'sw'],
+      chunks: [ 'idb', 'dbhelper', 'main'],
       filename: 'index.html',
       inject: false
     }),
@@ -33,7 +33,7 @@ module.exports = {
       template: './restaurant.html',
       title: 'Restaurant Info',
       chunksSortMode: 'manual',
-      chunks: ['idb', 'dbhelper', 'restaurant', 'sw'],
+      chunks: ['idb', 'dbhelper', 'restaurant'],
       filename: 'restaurant.html',
       inject: false
     }),

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     window.initMap(true);
   });
 
-  navigator.serviceWorker.register('sw.bundle.js').then(function() {
+  navigator.serviceWorker.register('/sw.bundle.js').then(function() {
     console.log('Registration worked!');
   }).catch(function() {
     console.log('Registration failed!');

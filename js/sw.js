@@ -4,7 +4,6 @@ self.addEventListener('install', function(event) {
       return cache.addAll([
         '/',
         '/restaurant.html',
-        '/index.bundle.js',
         '/idb.bundle.js',
         '/main.bundle.js',
         '/restaurant.bundle.js',
