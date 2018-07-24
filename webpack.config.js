@@ -7,7 +7,6 @@ const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './js/index.js',
     main: './js/main.js',
     dbhelper: './js/dbhelper.js',
     restaurant: './js/restaurant_info.js',

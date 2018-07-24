@@ -1,6 +1,25 @@
 import { DBHelper } from './dbhelper';
 import './../css/styles.css';
 
+document.addEventListener('DOMContentLoaded', (event) => {
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    window.initMap(true);
+  });
+
+  navigator.serviceWorker.register('sw.bundle.js').then(function() {
+    console.log('Registration worked!');
+    navigator.serviceWorker.ready.then(function(swRegistration) {
+      return swRegistration.sync.register('dbSync');
+    }, function() {
+      console.log('bg sync registration failed');
+    });
+  }).catch(function() {
+    console.log('Registration failed!');
+  });
+
+  RestaurantInfo.initReviewForm();
+});
+
 /**
  * Initialize Google map, called from HTML.
  */

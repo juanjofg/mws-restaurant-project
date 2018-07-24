@@ -5,6 +5,18 @@ import './../css/styles.css';
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+  if (!navigator.serviceWorker) return;
+
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    window.initMap(true);
+  });
+
+  navigator.serviceWorker.register('sw.bundle.js').then(function() {
+    console.log('Registration worked!');
+  }).catch(function() {
+    console.log('Registration failed!');
+  });
+
   RestaurantDirectory.initIndexedDB();
   RestaurantDirectory.fetchNeighborhoods();
   RestaurantDirectory.fetchCuisines();

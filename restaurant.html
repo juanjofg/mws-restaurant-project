@@ -83,10 +83,10 @@
             </select>
           </div>
           <div class="review-user-comments">
-            <label for="review-user-comments">Comments</label>
+            <label for="review-user-comments">Comments (required)</label>
             <textarea id="review-user-comments" cols="30" rows="10"></textarea>
           </div>
-          <button type="button" id="review-submit">Submit</button>
+          <button type="submit" id="review-submit">Submit</button>
         </form>
       </fieldset>
       <hr>
@@ -101,7 +101,7 @@
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
   <!-- End footer -->
-  <script src="index.bundle.js"></script>
+  
   <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
   <% } %>
