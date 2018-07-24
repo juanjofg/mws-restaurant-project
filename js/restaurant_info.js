@@ -210,6 +210,34 @@ export class RestaurantInfo {
     return li;
   }
 
+  static initReviewForm() {
+    const ul = document.getElementById('reviews-list');
+    const id = this.getParameterByName('id');
+    const reviewForm = document.getElementById('reviews-form');
+    reviewForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const review = {
+        restaurant_id: parseInt(id, 10),
+        name: document.getElementById('review-user-name').value,
+        rating: parseInt(document.getElementById('review-restaurant-rating').value, 10),
+        comments: document.getElementById('review-user-comments').value
+      }
+      if (!review || !review.comments) {
+        return false;
+      } else {
+        DBHelper.saveRestaurantReviews(review, (error, response) => {
+          if (error) {
+            console.log(error);
+          } else {
+            review.updatedAt = response.updatedAt;
+            review.restaurant_id = response.id;
+            ul.insertBefore(this.createReviewHTML(review), ul.firstChild);
+          }
+        });
+      }
+    });
+  }
+
   /**
    * Format date as YYYY-MM-DD
    */

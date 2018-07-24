@@ -289,4 +289,22 @@ export class DBHelper {
     return marker;
   }
 
+  /**
+   * Save review and check if browser is online/offline in order to use
+   * proper method -> local db - background sync
+   */
+  static saveRestaurantReviews(review, callback) {
+    const reviewURL = `${DBHelper.DATABASE_URL}/reviews`;
+    fetch(reviewURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify(review),
+    })
+    .then(response => response.json())
+    .then(review => {
+      callback(null, review);
+    }, error => callback(error, null));
+  }
 }
