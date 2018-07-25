@@ -7,21 +7,27 @@ import './../css/styles.css';
 document.addEventListener('DOMContentLoaded', (event) => {
   if (!navigator.serviceWorker) return;
 
-  navigator.serviceWorker.addEventListener('message', function(event) {
-    if (event.data && event.data.msg === "initMap") {
-      window.initMap(true);
-    }
-  });
-
   navigator.serviceWorker.register('/sw.bundle.js').then(function() {
     console.log('Registration worked!');
   }).catch(function() {
     console.log('Registration failed!');
   });
 
+  const map = document.getElementById('map');
+  const message = document.createElement('a');
+  message.classList.add('initialize-map');
+  message.innerText = 'Click or tap the image map to load Google Maps';
+  map.appendChild(message);
+
+  map.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.initMap(false);
+  });
+
   RestaurantDirectory.initIndexedDB();
   RestaurantDirectory.fetchNeighborhoods();
   RestaurantDirectory.fetchCuisines();
+  self.updateRestaurants();
 });
 
 /**
@@ -38,10 +44,9 @@ window.initMap = (offline) => {
       center: loc,
       scrollwheel: false
     });
-  }
-  self.updateRestaurants();
+    RestaurantDirectory.addMarkersToMap();
+  }  
 }
-
 
 /**
  * Update page and map for current restaurants.
@@ -162,9 +167,6 @@ export class RestaurantDirectory {
     restaurants.forEach(restaurant => {
       ul.append(this.createRestaurantHTML(restaurant));
     });
-    if (typeof google !== "undefined") {
-      this.addMarkersToMap();
-    }
   }
 
   /**

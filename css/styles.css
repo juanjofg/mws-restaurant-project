@@ -106,7 +106,19 @@ nav h1 a {
 #map {
   height: 300px;
   width: 100%;
-  background-color: #ccc;
+  background: url(/img/map.svg) no-repeat 0 50%;
+  background-size: cover;
+}
+.initialize-map {
+  text-align: center;
+  font-size: 200%;
+  font-weight: bold;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #727272;
 }
 /* ====================== Restaurant Filtering ====================== */
 .filters {
