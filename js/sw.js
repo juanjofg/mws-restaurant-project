@@ -40,7 +40,7 @@ self.addEventListener('fetch', function(event) {
       return fetch(event.request);
     } else {
       self.clients.matchAll().then(clients => {
-        clients.forEach(client => client.postMessage({msg: 'Run initMap offline'}));
+        clients.forEach(client => client.postMessage({msg: 'initMap'}));
       })
     }
   }
@@ -62,3 +62,16 @@ self.addEventListener('fetch', function(event) {
   );
   
 });
+
+self.addEventListener('sync', function(event) {
+  if (event.tag === 'dbSync') {
+    event.waitUntil(updateRestaurantInfo());
+  }
+});
+
+function updateRestaurantInfo() {
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => client.postMessage({msg: 'syncDb'}));
+  });
+  console.log('sync registered');
+}

@@ -3,19 +3,20 @@ import './../css/styles.css';
 
 document.addEventListener('DOMContentLoaded', (event) => {
   navigator.serviceWorker.addEventListener('message', function(event) {
-    window.initMap(true);
+    if (event.data && event.data.msg === "initMap") {
+      window.initMap(true);
+    } else if (event.data && event.data.msg === "syncDb") {
+      console.log('llamando a la sincronización');
+      RestaurantInfo.saveReviews(null);
+    }
   });
 
-  navigator.serviceWorker.register('/sw.bundle.js').then(function() {
-    console.log('Registration worked!');
-    navigator.serviceWorker.ready.then(function(swRegistration) {
-      return swRegistration.sync.register('dbSync');
-    }, function() {
-      console.log('bg sync registration failed');
+  navigator.serviceWorker.register('/sw.bundle.js')
+    .then(function() {
+      console.log('SW registration worked!');
+    }).catch(function() {
+      console.log('SW registration failed!');
     });
-  }).catch(function() {
-    console.log('Registration failed!');
-  });
 
   RestaurantInfo.initReviewForm();
 });
