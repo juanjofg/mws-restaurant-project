@@ -3,9 +3,7 @@ import './../css/styles.css';
 
 document.addEventListener('DOMContentLoaded', (event) => {
   navigator.serviceWorker.addEventListener('message', function(event) {
-    if (event.data && event.data.msg === "initMap") {
-      window.initMap(true);
-    } else if (event.data && event.data.msg === "syncDb") {
+    if (event.data && event.data.msg === "syncDb") {
       console.log('llamando a la sincronización');
       RestaurantInfo.saveReviews(null);
     }
@@ -17,10 +15,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }).catch(function() {
       console.log('SW registration failed!');
     });
-
+  
+  DBHelper.initIDB();
   window.addEventListener('online', RestaurantInfo.updateOnlineStatus);
   window.addEventListener('offline', RestaurantInfo.updateOnlineStatus);
 
+  const map = document.getElementById('map');
+  const message = document.createElement('a');
+  message.classList.add('initialize-map');
+  message.innerText = 'Click or tap the image map to load Google Maps';
+  map.appendChild(message);
+
+  map.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.initMap(false);
+  });
+
+  RestaurantInfo.initRestaurant();
   RestaurantInfo.initReviewForm();
 });
 
@@ -28,24 +39,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
  * Initialize Google map, called from HTML.
  */
 window.initMap = (offline) => {
-  DBHelper.initIDB();
-  RestaurantInfo.fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      if (!offline) {
-        RestaurantInfo.map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          center: restaurant.latlng,
-          scrollwheel: false
-        });
-      }
-      RestaurantInfo.fillBreadcrumb();
-      if (typeof google !== "undefined") {
-        DBHelper.mapMarkerForRestaurant(RestaurantInfo.restaurant, RestaurantInfo.map);
-      }
-    }
-  });
+  if (!offline) {
+    RestaurantInfo.map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 16,
+      center: RestaurantInfo.restaurant.latlng,
+      scrollwheel: false
+    });
+  }
+
+  if (typeof google !== "undefined") {
+    DBHelper.mapMarkerForRestaurant(RestaurantInfo.restaurant, RestaurantInfo.map);
+  }
 }
 
 export class RestaurantInfo {
@@ -53,6 +57,16 @@ export class RestaurantInfo {
     this.map = undefined;
     this.restaurant = undefined;
     this.reviews = [];
+  }
+
+  static initRestaurant() {
+    RestaurantInfo.fetchRestaurantFromURL((error, restaurant) => {
+      if (error) { // Got an error!
+        console.error(error);
+      } else {
+        RestaurantInfo.fillBreadcrumb();
+      }
+    });
   }
 
   /**
