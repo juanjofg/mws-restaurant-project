@@ -294,6 +294,40 @@ export class DBHelper {
    * proper method -> local db - background sync
    */
   static saveRestaurantReviews(review, callback) {
+    
+    if (navigator.onLine) {
+      // 1 - Check if something was saved when offline and try to save
+      this.getOutboxReviews()
+        .then(outboxReviews => {
+          if (outboxReviews && outboxReviews.length) {
+            outboxReviews.map(out => {
+              this.saveRestaurantReviewsRemotely(out, callback);
+            });
+            this.cleanOutboxReview();
+          }
+        });
+      // Normal review
+      if (review) {
+        this.saveRestaurantReviewsRemotely(review, callback);
+      }
+    } else {
+      // save reviews in indexedDB outbox
+      this._promiseDb.then((db) => {
+        if (!db) return;
+      
+        let tx = db.transaction('outbox', 'readwrite');
+        let outboxStore = tx.objectStore('outbox');
+
+        outboxStore.put(review);
+        callback(null, review);
+        return tx.complete;
+      }).then(res => {
+        // do not know if indexedDB returns the review
+        console.log(res);
+      }, error => callback(error, null));
+    }
+  }
+  static saveRestaurantReviewsRemotely(review, callback) {
     const reviewURL = `${DBHelper.DATABASE_URL}/reviews`;
     fetch(reviewURL, {
       method: 'POST',
@@ -306,5 +340,35 @@ export class DBHelper {
     .then(review => {
       callback(null, review);
     }, error => callback(error, null));
+  }
+
+  /**
+   * Get reviews saved when offline
+   */
+  static getOutboxReviews() {
+    return this._promiseDb.then((db) => {
+      if (!db) return;
+
+      let tx = db.transaction('outbox', 'readwrite');
+      let outboxStore = tx.objectStore('outbox');
+
+      return outboxStore.getAll();
+    }, error => console.log("error getting outbox reviews"))
+  }
+
+  /**
+   * Clean outbox store
+   */
+  static cleanOutboxReview() {
+    return this._promiseDb.then(function(db) {
+      if (!db) return;
+  
+      var tx = db.transaction('outbox', 'readwrite');
+      var reviewStore = tx.objectStore('outbox');
+  
+      reviewStore.clear();
+    }).then(()=>{
+      console.log('Outbox reviews cleared');
+    });
   }
 }

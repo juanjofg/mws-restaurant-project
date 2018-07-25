@@ -229,15 +229,28 @@ export class RestaurantInfo {
       if (!review || !review.comments) {
         return false;
       } else {
-        DBHelper.saveRestaurantReviews(review, (error, response) => {
-          if (error) {
-            console.log(error);
-          } else {
-            review.updatedAt = response.updatedAt;
-            review.restaurant_id = response.id;
-            ul.insertBefore(this.createReviewHTML(review), ul.firstChild);
-          }
-        });
+        this.registerSyncEvent()
+          .then(() => this.saveReviews(review));
+      }
+    });
+  }
+
+  /**
+   * Save reviews either in the outbox, ready for the sync event
+   * or directly to server
+   */
+  static saveReviews(review) {
+    DBHelper.saveRestaurantReviews(review, (error, response) => {
+      if (error) {
+        console.log(error);
+      } else {
+        const ul = document.getElementById('reviews-list');
+        this.resetReviewForm();
+
+        if (!response.updatedAt) {
+          response.updatedAt = response.updatedAt || this.formatDate(new Date().getTime());
+        }
+        ul.insertBefore(this.createReviewHTML(response), ul.firstChild);
       }
     });
   }
@@ -255,6 +268,16 @@ export class RestaurantInfo {
       })
       .catch(error => console.log(error));
   }
+
+  /** 
+   * Empty review form
+   * */
+  static resetReviewForm() {
+    document.getElementById('review-user-name').value = '';
+    document.getElementById('review-restaurant-rating').value = '';
+    document.getElementById('review-user-comments').value = '';
+  }
+
   /**
    * Format date as YYYY-MM-DD
    */
