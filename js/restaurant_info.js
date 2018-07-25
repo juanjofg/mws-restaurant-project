@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       console.log('SW registration failed!');
     });
 
+  window.addEventListener('online', RestaurantInfo.updateOnlineStatus);
+  window.addEventListener('offline', RestaurantInfo.updateOnlineStatus);
+
   RestaurantInfo.initReviewForm();
 });
 
@@ -211,11 +214,12 @@ export class RestaurantInfo {
   }
 
   static initReviewForm() {
-    const ul = document.getElementById('reviews-list');
     const id = this.getParameterByName('id');
     const reviewForm = document.getElementById('reviews-form');
+    this.updateOnlineStatus();
     reviewForm.addEventListener('submit', (event) => {
       event.preventDefault();
+
       const review = {
         restaurant_id: parseInt(id, 10),
         name: document.getElementById('review-user-name').value,
@@ -238,6 +242,19 @@ export class RestaurantInfo {
     });
   }
 
+  /**
+   * Register background sync to save reviews remotely
+   */
+  static registerSyncEvent() {
+    return navigator.serviceWorker.ready
+      .then(function(swRegistration) {
+        return swRegistration.sync.register('dbSync');
+      })
+      .then(() => {
+        console.log('bg sync registration ready');
+      })
+      .catch(error => console.log(error));
+  }
   /**
    * Format date as YYYY-MM-DD
    */
@@ -269,5 +286,13 @@ export class RestaurantInfo {
     if (!results[2])
       return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  /**
+   * Manage form message when online/offline
+   */
+  static updateOnlineStatus(event) {
+    let online = navigator.onLine;
+    document.getElementById("network").style.display = online ? 'none' : 'block';
   }
 }
