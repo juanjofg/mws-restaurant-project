@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   if (!navigator.serviceWorker) return;
 
   navigator.serviceWorker.addEventListener('message', function(event) {
-    window.initMap(true);
+    if (event.data && event.data.msg === "initMap") {
+      window.initMap(true);
+    }
   });
 
   navigator.serviceWorker.register('/sw.bundle.js').then(function() {
@@ -172,6 +174,12 @@ export class RestaurantDirectory {
     const li = document.createElement('li');
     const article = document.createElement('article');
 
+    const picture = document.createElement('picture');
+    const source = document.createElement('source');
+    source.setAttribute('srcset', `img/${restaurant.id}.webp`);
+    source.setAttribute('type', 'image/webp');
+    picture.appendChild(source);
+
     const image = document.createElement('img');
     image.className = 'restaurant-img';
     const src = DBHelper.imageUrlForRestaurant(restaurant);
@@ -181,7 +189,9 @@ export class RestaurantDirectory {
     image.src = x1;
     image.srcset = `${x1} 1x, ${x2} 2x`;
     image.alt = DBHelper.imageDescriptionForRestaurant(restaurant);
-    article.append(image);
+
+    picture.appendChild(image);
+    article.append(picture);
 
     const name = document.createElement('h1');
     name.innerHTML = restaurant.name;
