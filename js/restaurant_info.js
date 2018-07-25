@@ -120,8 +120,7 @@ export class RestaurantInfo {
     if (restaurant.operating_hours) {
       this.fillRestaurantHoursHTML();
     }
-    // fill reviews
-    // this.fillReviewsHTML();
+
     this.getRestaurantReviews(restaurant.id);
   }
 
