@@ -290,6 +290,38 @@ export class DBHelper {
   }
 
   /**
+   * Toggle restaurant as favorite
+   */
+  static toggleFavoriteRestaurant(restaurant) {
+    if (navigator.onLine) {
+      const favoriteURL = `http://localhost:1337/restaurants/${restaurant.id}/?is_favorite=${restaurant.is_favorite}`;
+    
+      fetch(favoriteURL, { method: 'PUT' })
+        .then(() => {
+          restaurant.is_favorite = restaurant.is_favorite;
+          this.toggleFavoriteRestaurantLocally(restaurant);
+        })
+        .catch(error => callback(error, null));
+    } else {
+      restaurant.is_favorite = restaurant.is_favorite;
+      this.toggleFavoriteRestaurantLocally(restaurant);
+    }
+  }
+
+  static toggleFavoriteRestaurantLocally(restaurant) {
+    this._promiseDb.then((db) => {
+      if (!db) return;
+      const tx = db.transaction('restaurants', 'readwrite');
+      const restaurantStore = tx.objectStore('restaurants');
+
+      restaurantStore.put(restaurant);
+      return tx.complete;
+    }).then(res => {
+      console.log('Local restaurant marked as favorite');
+    });
+  }
+
+  /**
    * Save review and check if browser is online/offline in order to use
    * proper method -> local db - background sync
    */
